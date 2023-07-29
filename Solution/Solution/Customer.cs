@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,12 @@ namespace Solution
 {
     internal class Customer
     {
-        public string id;
-        public string name;
-        public List<Instance> instances;
+        [Name("Customer ID")]
+        public string Id { get; set; }
+
+        [Name("Customer Name")]
+        public string Name { get; set; }
+
+        public Dictionary<string,Instance> Instances;
     }
 }

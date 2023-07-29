@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,11 @@ namespace Solution
 {
     internal class Instance
     {
-        public string type;
-        public double charge;
+        [Name("Instance Type")]
+        public string Type {  get; set; }
+
+        [Name("Charge/Hour")]
+        public string Charge { get; set; }
         public HashSet<string> ids;
         public List<string> sessions;
         public string totalTime;
