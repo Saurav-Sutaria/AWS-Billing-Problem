@@ -15,7 +15,7 @@ namespace Solution
         [Name("Charge/Hour")]
         public string Charge { get; set; }
         public HashSet<string> ids;
-        public List<string> sessions;
+        public List<Session> sessions;
         public string totalTime;
         public string billedTime;
         public string amount;
