@@ -16,8 +16,6 @@ namespace Solution
         public string Charge { get; set; }
         public HashSet<string> ids;
         public List<Session> sessions;
-        public string totalTime;
-        public string billedTime;
-        public string amount;
+        public Dictionary<string,MonthSession> monthlySessions; //map -> month Name-year (JUL-2021) with all session in that month
     }
 }

@@ -11,6 +11,6 @@ namespace Solution
     {
         public string startTime;
         public string endTime;
-        public string totalTime;
+        public TimeSpan totalTime;
     }
 }
