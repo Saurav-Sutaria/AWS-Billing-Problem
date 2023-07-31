@@ -9,7 +9,6 @@ namespace Solution
         public string startTime;
         public string endTime;
         public TimeSpan totalTime;
-
         public static void GenerateMontlySessions(Dictionary<string, Customer> customerMap)
         {
             foreach (KeyValuePair<string, Customer> kvp in customerMap)
