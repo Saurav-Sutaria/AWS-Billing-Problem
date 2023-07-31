@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Solution
 {
@@ -14,5 +10,10 @@ namespace Solution
         public TimeSpan billedTime;
         public double ratePerHour;
         public double totalAmount;
+
+        public void PrintResource(Resource r)
+        {
+            Console.WriteLine(r.resourceType + " , " + r.totalResources + " , " + Helper.ConvertToHour(r.totalTime) + " , " + Helper.ConvertToHour(r.billedTime) + " , " + r.ratePerHour + " , " + r.totalAmount);
+        }
     }
 }
