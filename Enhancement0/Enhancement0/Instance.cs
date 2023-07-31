@@ -1,12 +1,8 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration.Attributes;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 
-namespace Solution
+namespace Enhancement0
 {
     internal class Instance
     {

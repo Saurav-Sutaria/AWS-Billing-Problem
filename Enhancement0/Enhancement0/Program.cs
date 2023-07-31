@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Solution
+﻿namespace Enhancement0
 {
     internal class Program
     {

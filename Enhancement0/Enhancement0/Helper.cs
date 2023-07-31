@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace Solution
+namespace Enhancement0
 {
     internal class Helper
     {

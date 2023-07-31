@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Solution
+﻿namespace Enhancement0
 {
     internal class Resource
     {

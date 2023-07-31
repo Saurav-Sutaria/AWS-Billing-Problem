@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace Solution
+﻿namespace Enhancement0
 {
     internal class Bill
     {
