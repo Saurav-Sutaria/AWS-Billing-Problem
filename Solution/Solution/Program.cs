@@ -14,18 +14,14 @@ namespace Solution
 {
     internal class Program
     {
+        
         static TimeSpan RoundToNearestNextHour(TimeSpan time)
         {
-            // Get the total minutes in the TimeSpan
-            double totalMinutes = time.TotalMinutes;
+            // Get the total second in the TimeSpan
             double totalSeconds = time.TotalSeconds;
-            // Round to the nearest next hour
-            double roundedMinutes = Math.Round(totalMinutes / 60.0) * 60.0;
-            double roundedSeconds = Math.Round(totalSeconds / 60.0) * 60.0;
+            int newHour = (int)(Math.Ceiling(totalSeconds / 3600.0));
             // Convert back to TimeSpan
-            TimeSpan roundedTime = TimeSpan.FromSeconds(roundedSeconds);
-            roundedTime = TimeSpan.FromMinutes(roundedMinutes);
-
+            TimeSpan roundedTime = new TimeSpan(0, newHour, 0, 0);
             return roundedTime;
         }
 
@@ -67,9 +63,16 @@ namespace Solution
                 if (endOfMonth <= endDate)
                 {
                     Session newSession = new Session();
+             
                     newSession.startTime = $"{startDate}";
                     newSession.endTime = $"{endOfMonth}";
-                    newSession.totalTime = endOfMonth - startDate;
+                    //start time is 23:59:59 of the last day of last month
+                    if (startDate == endOfMonth) newSession.totalTime = new TimeSpan(0, 0, 1);
+                    else newSession.totalTime = endOfMonth - startDate;
+                    if(newSession.totalTime.Minutes == 59 && newSession.totalTime.Seconds == 59)
+                    {
+                        newSession.totalTime = new TimeSpan(newSession.totalTime.Days,newSession.totalTime.Hours+1, 0, 0);
+                    }
                     startDate = endOfMonth.AddSeconds(1);
                     //Console.WriteLine(newSession.startTime + " -- " + newSession.endTime + " -- " + newSession.totalTime);
                     i.monthlySessions[monthId].sessions.Add(newSession);
@@ -129,17 +132,36 @@ namespace Solution
             }
 
         }
+        public static string convertToHour(TimeSpan t)
+        {
+            int hours = (int)t.TotalHours;
+            return hours.ToString() + "." + t.Minutes.ToString() + "." + t.Seconds.ToString();
+        }
         public static void printResource(Resource r)
         {
-            Console.WriteLine(r.resourceType + " , " + r.totalResources + " , " + r.totalTime + " , " + r.billedTime + " , " + r.ratePerHour + " , " + r.totalAmount);
+            Console.WriteLine(r.resourceType + " , " + r.totalResources + " , " + convertToHour(r.totalTime) + " , " + convertToHour(r.billedTime) + " , " + r.ratePerHour + " , " + r.totalAmount);
         }
         public static void printBill(Bill bill)
         {
-            Console.WriteLine(bill.fileName + " , " + bill.customerName + " , " + bill.month + " , " + bill.year);
+            Console.WriteLine(bill.fileName + " , " + bill.customerName + " , " + bill.month + " , " + bill.year + " , " + bill.totalAmount);
             foreach(Resource r in bill.resourceUsedInfo.Values)
             {
                 printResource(r);
             }
+        }
+        public static void generateCSV(Bill bill)
+        {
+            var csv = new StringBuilder();
+            string csvPath = @"E:/@internship/TestCases/Case4/Result/" + bill.fileName + ".csv";
+            csv.AppendLine(bill.customerName);
+            csv.AppendLine(string.Format("Bill for month of {0} {1}",bill.month,bill.year));
+            csv.AppendLine(string.Format("Total Amount: {0}", bill.totalAmount));
+            csv.AppendLine("Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Rate (per hour),Total Amount");
+            foreach(Resource r in bill.resourceUsedInfo.Values)
+            {
+                csv.AppendLine(string.Format("{0},{1},{2},{3},${4},${5}",r.resourceType,r.totalResources, convertToHour(r.totalTime), convertToHour(r.billedTime),r.ratePerHour,r.totalAmount));
+            }
+            File.WriteAllText(csvPath, csv.ToString());
         }
         static void Main(string[] args){
             string usagePath = "E:/@internship/TestCases/Case4/Input/AWSCustomerUsage.csv";
@@ -227,15 +249,6 @@ namespace Solution
                     }
                 }
             }
-
-            //foreach (KeyValuePair<string, Customer> kvp in customerMap)
-            //{
-            //    printFullCustomer(kvp.Value);
-            //}
-            //compute and round off time for each session
-
-            //find total time and billed time
-
             //generate bill
             Dictionary<string, Bill> billList = new Dictionary<string, Bill>();
             foreach(KeyValuePair<string,Customer> kvp in customerMap)
@@ -246,6 +259,7 @@ namespace Solution
                     Instance i = keyValuePair.Value;
                     foreach(KeyValuePair<string,MonthSession> monthSession in i.monthlySessions)
                     {
+                        
                         string fileName = c.Id + "_" + monthSession.Key;
                         //Console.WriteLine(monthSession.Key);
                         //bill for a particular month not exists
@@ -274,20 +288,21 @@ namespace Solution
                             newResource.totalAmount = 0;
                             currBill.resourceUsedInfo.Add(i.Type, newResource);
                         }
-                        Resource currResource = currBill.resourceUsedInfo[i.Type];  
-                        foreach(Session s in monthSession.Value.sessions)
+                        Resource currResource = currBill.resourceUsedInfo[i.Type];
+                        foreach (Session s in monthSession.Value.sessions)
                         {
-                            currResource.totalTime += s.totalTime;
-                            currResource.billedTime += RoundToNearestNextHour(s.totalTime);
+                            currResource.totalTime += (s.totalTime);
+                            currResource.billedTime += (RoundToNearestNextHour(s.totalTime));
                         }
                         currResource.totalAmount += (currResource.billedTime.TotalHours * currResource.ratePerHour);
+                        currBill.totalAmount += currResource.totalAmount;
                     }
                 }
             }
-
             //print the bill
             foreach(Bill bill in billList.Values)
             {
+                generateCSV(bill);
                 printBill(bill);
             }
         }
