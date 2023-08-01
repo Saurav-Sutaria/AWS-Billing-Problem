@@ -67,8 +67,8 @@
                             currResource.totalTime += (s.totalTime);
                             currResource.billedTime += (Helper.RoundToNearestNextHour(s.totalTime));
                         }
-                        currResource.totalAmount += (currResource.billedTime.TotalHours * currResource.ratePerHour);
-                        currBill.totalAmount += currResource.totalAmount;
+                        currResource.totalAmount += Math.Round(currResource.billedTime.TotalHours * currResource.ratePerHour,4);
+                        currBill.totalAmount += Math.Round(currResource.totalAmount,4);
                     }
                 }
             }
