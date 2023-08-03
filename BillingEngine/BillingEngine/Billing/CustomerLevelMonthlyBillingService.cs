@@ -1,21 +1,22 @@
-using System.Collections.Generic;
-using System.Linq;
 using BillingEngine.Models;
 using BillingEngine.Models.Billing;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BillingEngine.Billing
 {
     public class CustomerLevelMonthlyBillingService
     {
-        private readonly DiscountService _discountService;
+        //private readonly DiscountService _discountService;
 
         public CustomerLevelMonthlyBillingService()
         {
-            _discountService = new DiscountService();
+            //_discountService = new DiscountService();
         }
-        
+
         public List<MonthlyBill> GenerateMonthlyBillsForCustomer(Customer customer)
         {
+            //returns all the month year combination for a particular customer
             var distinctMonthYears = customer.GetDistinctMonthYears();
 
             return distinctMonthYears
@@ -29,8 +30,8 @@ namespace BillingEngine.Billing
 
             monthlyBill.AddMonthlyEc2Usages(customer.GetMonthlyEc2InstanceUsagesForMonth(monthYear));
 
-            _discountService.ApplyDiscounts(customer, monthlyBill);
+            //_discountService.ApplyDiscounts(customer, monthlyBill);
             return monthlyBill;
         }
-    }
+    }   
 }

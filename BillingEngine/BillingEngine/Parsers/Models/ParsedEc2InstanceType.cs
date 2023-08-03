@@ -1,4 +1,5 @@
 using CsvHelper.Configuration.Attributes;
+using System;
 
 namespace BillingEngine.Parsers.Models
 {
@@ -7,6 +8,6 @@ namespace BillingEngine.Parsers.Models
         [Name("Instance Type")]
         public string Ec2InstanceType { get; set; }
         [Name("Charge/Hour")]
-        public decimal CostPerHour { get; set; }
+        public string CostPerHour { get; set; }
     }
 }

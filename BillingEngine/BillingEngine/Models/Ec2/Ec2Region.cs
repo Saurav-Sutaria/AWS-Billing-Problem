@@ -4,7 +4,8 @@ namespace BillingEngine.Models.Ec2
     {
         public string Name { get; }
 
-        public Ec2Region(string name) {
+        public Ec2Region(string name)
+        {
             this.Name = name;
         }
     }

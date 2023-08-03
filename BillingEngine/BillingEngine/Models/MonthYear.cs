@@ -7,6 +7,11 @@ namespace BillingEngine.Models
         public int Month { get; }
         public int Year { get; }
 
+        public MonthYear(int month, int year)
+        {
+            this.Month = month;
+            this.Year = year;
+        }
         public bool IsLesserThan(DateTime dateTime)
         {
             if (Year < dateTime.Year)

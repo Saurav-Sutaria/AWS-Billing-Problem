@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using BillingEngine.Models;
 using BillingEngine.Models.Ec2;
 using BillingEngine.Parsers;
 using BillingEngine.Parsers.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BillingEngine.DomainModelGenerators
 {
@@ -17,6 +17,7 @@ namespace BillingEngine.DomainModelGenerators
         {
             _ec2InstanceDomainModelGenerator = new Ec2InstanceDomainModelGenerator();
             _ec2InstanceTypeDomainModelGenerator = new Ec2InstanceTypeDomainModelGenerator();
+            _ec2RegionDomainModelGenerator = new Ec2RegionDomainModelGenerator();
         }
 
         public List<Customer> GenerateCustomerModels(
@@ -51,9 +52,14 @@ namespace BillingEngine.DomainModelGenerators
         {
             // Build customer object as well as associated composite objects, e.g. Ec2Instance, 
             //throw new System.NotImplementedException();
-           
-            
-            Customer newCustomer = new Customer();
+            //generate ec2Instances model for a customer
+            List<Ec2Instance> ec2Instances = _ec2InstanceDomainModelGenerator.GenerateEc2InstanceModels(
+                ec2ResourceUsageEventsForCustomer, ec2InstanceTypes);
+
+            Customer newCustomer = new Customer(
+                parsedCustomerRecord.CustomerId,
+                parsedCustomerRecord.CustomerName,
+                ec2Instances);
             return newCustomer;
         }
     }

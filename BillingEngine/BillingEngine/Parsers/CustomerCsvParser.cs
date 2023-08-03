@@ -11,8 +11,8 @@ namespace BillingEngine.Parsers
         public List<ParsedCustomerRecord> Parse(string filePath)
         {
             // Your logic about parsing the Customer CSV
-            using(var reader = new StreamReader(filePath)) 
-            using(var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
                 return csv.GetRecords<ParsedCustomerRecord>().ToList();
         }
     }

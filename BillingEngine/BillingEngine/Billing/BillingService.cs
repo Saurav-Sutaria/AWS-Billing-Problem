@@ -1,8 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using BillingEngine.DomainModelGenerators;
 using BillingEngine.Models.Billing;
 using BillingEngine.Parsers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BillingEngine.Billing
 {
@@ -38,9 +39,9 @@ namespace BillingEngine.Billing
             var parsedCustomerRecords = _customerCsvParser.Parse(customerCsvPath);
 
             var parsedEc2ResourceUsageEventRecords = _resourceUsageTypeEventParser.Parse(resourceUsageCsvPath);
-
+            
             var parsedEc2InstanceTypes = _instanceTypeCsvParser.Parse(resourceTypeCsvPath);
-
+  
             var parsedEc2Regions = _regionCsvParser.Parse(regionCsvPath);
 
             //generates customer object
@@ -49,8 +50,8 @@ namespace BillingEngine.Billing
                 parsedEc2InstanceTypes,
                 parsedEc2Regions,
                 parsedEc2ResourceUsageEventRecords);
-
-            //generate monthly bills
+            
+            //generate monthly bills and returns list of monthly bills
             return customers
                 .SelectMany(_customerLevelMonthlyBillingService.GenerateMonthlyBillsForCustomer)
                 .ToList();

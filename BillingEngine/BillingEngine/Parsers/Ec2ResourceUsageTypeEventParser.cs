@@ -1,9 +1,9 @@
+using BillingEngine.Parsers.Models;
+using CsvHelper;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using BillingEngine.Parsers.Models;
-using CsvHelper;
 
 namespace BillingEngine.Parsers
 {

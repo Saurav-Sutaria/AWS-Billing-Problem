@@ -1,5 +1,7 @@
 ﻿using BillingEngine.Billing;
+using BillingEngine.Models.Billing;
 using BillingEngine.Printers;
+using System;
 
 namespace BillingEngine
 {
@@ -11,13 +13,13 @@ namespace BillingEngine
             BillPrinter billPrinter = new BillPrinter();
 
             var monthlyBills = billingService.GenerateMonthlyBills(
-                "E:/@internship/TestCases/Case1/Input/Customer.csv",
-                "E:/@internship/TestCases/Case1/Input/AWSResourceTypes.csv",
-                "E:/@internship/TestCases/Case1/Input/AWSCustomerUsage.csv",
+                "E:/@internship/TestCases/Case4/Input/Customer.csv",
+                "E:/@internship/TestCases/Case4/Input/AWSResourceTypes.csv",
+                "E:/@internship/TestCases/Case4/Input/AWSCustomerUsage.csv",
                 "E:/@internship/Test-cases-enhancment-1/input/Region.csv"
             );
-
-            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "path/to/output/dir"));
+            //Console.WriteLine(monthlyBills.Count);
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/TestCases/Case1/Result/"));
         }
     }
 }
