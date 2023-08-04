@@ -26,10 +26,10 @@ namespace BillingEngine.DomainModelGenerators
             return ec2Instances.Where(instance => instance.InstanceId == instanceId).FirstOrDefault();
         }
 
-        //extension method to find ec2 instance type from instance type name
-        public static Ec2InstanceType FindEc2InstanceType(this List<Ec2InstanceType> ec2InstanceTypes, string instanceType)
+        //extension method to find ec2 instance type from instance type name and region
+        public static Ec2InstanceType FindEc2InstanceType(this List<Ec2InstanceType> ec2InstanceTypes, string instanceType,string regionName)
         {
-            return ec2InstanceTypes.Where(instance => instance.InstanceType == instanceType).First();
+            return ec2InstanceTypes.Where(instance => (instance.InstanceType == instanceType && instance.Region.Name == regionName)).First();
         }
 
         //extension method to find the monthyear object
@@ -39,9 +39,9 @@ namespace BillingEngine.DomainModelGenerators
         }
 
         //extension method to find the aggregated ec2 instance
-        public static AggregatedMonthlyEc2Usage FindAggregatedMonthlyEc2Usage(this List<AggregatedMonthlyEc2Usage> list,string instanceType)
+        public static AggregatedMonthlyEc2Usage FindAggregatedMonthlyEc2Usage(this List<AggregatedMonthlyEc2Usage> list,Ec2InstanceType ec2InstanceType)
         {
-            return list.Where(record => record.ResourceType == instanceType).FirstOrDefault();
+            return list.Where(record => record.ResourceType == ec2InstanceType.InstanceType && record.RegionName == ec2InstanceType.Region.Name).FirstOrDefault();
         }
     }
 }

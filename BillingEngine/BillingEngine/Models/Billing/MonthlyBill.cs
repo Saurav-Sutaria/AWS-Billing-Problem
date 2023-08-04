@@ -35,13 +35,14 @@ namespace BillingEngine.Models.Billing
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
             foreach(var monthlyEc2InstanceUsage in MonthlyEc2InstanceUsages)
             {
-                var getAggreg = aggregatedMonthlyEc2Usages.FindAggregatedMonthlyEc2Usage(monthlyEc2InstanceUsage.Ec2InstanceType.InstanceType);
+                var getAggreg = aggregatedMonthlyEc2Usages.FindAggregatedMonthlyEc2Usage(monthlyEc2InstanceUsage.Ec2InstanceType);
                 if(getAggreg == null)
                 {
                     AggregatedMonthlyEc2Usage newAggregateUsage = new AggregatedMonthlyEc2Usage();
                     newAggregateUsage.ResourceType = monthlyEc2InstanceUsage.Ec2InstanceType.InstanceType;
                     newAggregateUsage.TotalResources = 1;
-                    newAggregateUsage.CostPerHour = monthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
+                    newAggregateUsage.RegionName = monthlyEc2InstanceUsage.Ec2InstanceType.Region.Name;
+                    newAggregateUsage.CostPerHour = monthlyEc2InstanceUsage.Ec2InstanceType.CostPerHourOnDemand;
                     newAggregateUsage.TotalUsedTime = monthlyEc2InstanceUsage.GetTotalUsageTime();
                     if (newAggregateUsage.TotalUsedTime.TotalSeconds == 0) continue;
                     newAggregateUsage.TotalBilledTime = new TimeSpan(monthlyEc2InstanceUsage.GetTotalBillableHours(),0,0);

@@ -16,5 +16,9 @@ namespace BillingEngine.Parsers.Models
         public DateTime UsedFrom { get; set; }
         [Name("Used Until")]
         public DateTime UsedUntil { get; set; }
+        [Name("Region")]
+        public string RegionName { get; set; }
+        [Name("OS")]
+        public string OSType {get; set; }
     }
 }

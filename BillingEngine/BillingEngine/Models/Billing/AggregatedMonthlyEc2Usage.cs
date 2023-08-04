@@ -3,7 +3,8 @@ using System;
 namespace BillingEngine.Models.Billing
 {
     public class AggregatedMonthlyEc2Usage
-    {
+    {   
+        public string RegionName { get; set; }
         public string ResourceType { get; set; }
         public int TotalResources { get; set; }
         public double CostPerHour { get; set; }

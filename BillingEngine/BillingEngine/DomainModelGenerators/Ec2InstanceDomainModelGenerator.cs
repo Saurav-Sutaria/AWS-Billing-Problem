@@ -20,7 +20,7 @@ namespace BillingEngine.DomainModelGenerators
                 if (ec2Instance == null)
                 {
                    
-                    Ec2Instance ec = new Ec2Instance(record.Ec2InstanceId, ec2InstanceTypes.FindEc2InstanceType(record.Ec2InstanceType));
+                    Ec2Instance ec = new Ec2Instance(record.Ec2InstanceId, ec2InstanceTypes.FindEc2InstanceType(record.Ec2InstanceType,record.RegionName));
                     ResourceUsageEvent resourceUsage = new ResourceUsageEvent(record.UsedFrom, record.UsedUntil);
                     ec.Usages.Add(resourceUsage);
                     ec2Instances.Add(ec);

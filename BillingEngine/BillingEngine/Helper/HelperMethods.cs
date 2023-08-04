@@ -12,7 +12,7 @@ namespace BillingEngine.Helper
         public static string ConvertToHour(TimeSpan t)
         {
             int hours = (int)t.TotalHours;
-            return hours.ToString() + "." + t.Minutes.ToString() + "." + t.Seconds.ToString();
+            return hours.ToString() + ":" + t.Minutes.ToString() + ":" + t.Seconds.ToString();
         }
         public static string GetMonthName(int month)
         {

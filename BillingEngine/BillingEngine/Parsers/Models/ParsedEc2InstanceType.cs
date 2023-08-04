@@ -7,7 +7,9 @@ namespace BillingEngine.Parsers.Models
     {
         [Name("Instance Type")]
         public string Ec2InstanceType { get; set; }
-        [Name("Charge/Hour")]
-        public string CostPerHour { get; set; }
+        [Name("Charge/Hour(OnDemand)")]
+        public string CostPerHourOnDemand { get; set; }
+        [Name("Region")]
+        public string RegionName { get; set; }
     }
 }

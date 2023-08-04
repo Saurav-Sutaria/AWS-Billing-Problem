@@ -13,13 +13,13 @@ namespace BillingEngine
             BillPrinter billPrinter = new BillPrinter();
 
             var monthlyBills = billingService.GenerateMonthlyBills(
-                "E:/@internship/TestCases/Case3/Input/Customer.csv",
-                "E:/@internship/TestCases/Case3/Input/AWSResourceTypes.csv",
-                "E:/@internship/TestCases/Case3/Input/AWSCustomerUsage.csv",
+                "E:/@internship/Test-cases-enhancment-1/input/Customer.csv",
+                "E:/@internship/Test-cases-enhancment-1/input/AWSResourceTypes.csv",
+                "E:/@internship/Test-cases-enhancment-1/input/AWSOnDemandResourceUsage.csv",
                 "E:/@internship/Test-cases-enhancment-1/input/Region.csv"
             );
             //Console.WriteLine(monthlyBills.Count);
-            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/TestCases/Case3/Result/"));
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/Test-cases-enhancment-1/result/"));
         }
     }
 }

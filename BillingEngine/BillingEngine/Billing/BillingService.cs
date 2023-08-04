@@ -32,13 +32,13 @@ namespace BillingEngine.Billing
         public List<MonthlyBill> GenerateMonthlyBills(
             string customerCsvPath,
             string resourceTypeCsvPath,
-            string resourceUsageCsvPath,
+            string resourceUsageOnDemandCsvPath,
             string regionCsvPath)
         {
             //parse each input file and store its data
             var parsedCustomerRecords = _customerCsvParser.Parse(customerCsvPath);
 
-            var parsedEc2ResourceUsageEventRecords = _resourceUsageTypeEventParser.Parse(resourceUsageCsvPath);
+            var parsedEc2ResourceUsageEventRecords = _resourceUsageTypeEventParser.Parse(resourceUsageOnDemandCsvPath);
             
             var parsedEc2InstanceTypes = _instanceTypeCsvParser.Parse(resourceTypeCsvPath);
   
