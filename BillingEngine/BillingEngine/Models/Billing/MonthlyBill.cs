@@ -11,7 +11,6 @@ namespace BillingEngine.Models.Billing
         public string CustomerId { get; }
         public string CustomerName { get; }
 
-        public double TotalAmount { get; set; }
         public MonthYear MonthYear { get; }
 
         public List<MonthlyEc2InstanceUsage> MonthlyEc2InstanceUsages { get; }
@@ -47,7 +46,6 @@ namespace BillingEngine.Models.Billing
                     if (newAggregateUsage.TotalUsedTime.TotalSeconds == 0) continue;
                     newAggregateUsage.TotalBilledTime = new TimeSpan(monthlyEc2InstanceUsage.GetTotalBillableHours(),0,0);
                     newAggregateUsage.TotalAmount = newAggregateUsage.CostPerHour * newAggregateUsage.TotalBilledTime.TotalHours;
-                    this.TotalAmount += newAggregateUsage.TotalAmount;
                     aggregatedMonthlyEc2Usages.Add(newAggregateUsage);
                 }
                 else
@@ -56,7 +54,6 @@ namespace BillingEngine.Models.Billing
                     getAggreg.TotalBilledTime += new TimeSpan(monthlyEc2InstanceUsage.GetTotalBillableHours(), 0, 0);
                     getAggreg.TotalUsedTime += monthlyEc2InstanceUsage.GetTotalUsageTime();
                     getAggreg.TotalAmount = getAggreg.TotalBilledTime.TotalHours * getAggreg.CostPerHour;
-                    this.TotalAmount += getAggreg.TotalAmount;
                 }
             }
             return aggregatedMonthlyEc2Usages;
@@ -68,10 +65,14 @@ namespace BillingEngine.Models.Billing
             // and then call monthlyEc2InstanceUsage.ApplyDiscount(discountedHours)
         }
 
-        public double GetTotalAmount()
+        public double GetTotalAmount(List<AggregatedMonthlyEc2Usage> usages)
         {
-            //throw new System.NotImplementedException();
-            return TotalAmount;
+            double totalAmount = 0;
+            foreach(var usage in usages)
+            {
+                totalAmount += usage.TotalAmount;
+            }
+            return Math.Round(totalAmount,4);
         }
 
         public double GetTotalDiscount()
@@ -80,10 +81,10 @@ namespace BillingEngine.Models.Billing
             return 0;
         }
 
-        public double GetAmountToBePaid()
-        {
-            return GetTotalAmount() - GetTotalDiscount();
-        }
+        //public double GetAmountToBePaid()
+        //{
+        //    return GetTotalAmount() - GetTotalDiscount();
+        //}
 
         //public List<MonthlyEc2InstanceUsage> GetFreeTierEligibleInstanceUsagesOfType(OperatingSystem operatingSystem)
         //{
