@@ -18,7 +18,7 @@ namespace BillingEngine
                 "E:/@internship/TestCases/Case3/Input/AWSCustomerUsage.csv",
                 "E:/@internship/Test-cases-enhancment-1/input/Region.csv"
             );
-            //Console.WriteLine(monthlyBills.Count);
+            
             monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/TestCases/Case3/Result/"));
         }
     }
