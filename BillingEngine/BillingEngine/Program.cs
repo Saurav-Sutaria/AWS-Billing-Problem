@@ -19,7 +19,7 @@ namespace BillingEngine
                 "E:/@internship/Test-cases-enhancment-1/input/Region.csv"
             );
             //Console.WriteLine(monthlyBills.Count);
-            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/Test-cases-enhancment-1/result/"));
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/Test-cases-enhancment-1/result_FreeTier/"));
         }
     }
 }

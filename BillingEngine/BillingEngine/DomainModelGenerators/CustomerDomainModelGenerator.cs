@@ -26,13 +26,14 @@ namespace BillingEngine.DomainModelGenerators
             List<ParsedEc2Region> parsedEc2Regions,
             List<ParsedEc2ResourceUsageEventRecord> parsedEc2ResourceUsageEventRecords)
         {
-            //converts ParsedEc2InstanceType -> Ec2InstanceType
-            List<Ec2InstanceType> ec2InstanceTypes = _ec2InstanceTypeDomainModelGenerator
-                .GenerateEc2InstanceTypes(parsedEc2InstanceTypes);
-
             //Generate Ec2Region instances by defining Ec2RegionDomainModelGenerator
             //converts ParsedEc2Region -> Ec2Region
             List<Ec2Region> ec2Regions = _ec2RegionDomainModelGenerator.GenerateEc2RegionTypes(parsedEc2Regions);
+
+
+            //converts ParsedEc2InstanceType -> Ec2InstanceType
+            List<Ec2InstanceType> ec2InstanceTypes = _ec2InstanceTypeDomainModelGenerator
+                .GenerateEc2InstanceTypes(parsedEc2InstanceTypes,ec2Regions);
 
             return parsedCustomerRecords.Select(parsedCustomerRecord =>
                     GenerateCustomerModel(

@@ -15,19 +15,17 @@ namespace BillingEngine.DomainModelGenerators
             foreach (var record in parsedEc2ResourceUsageTypeEventRecords)
             {
       
-                var ec2Instance = ec2Instances.FindEc2Instance(record.Ec2InstanceId);
+                var ec2Instance = ec2Instances.FindEc2Instance(record.Ec2InstanceId,record.OSType);
                 //instance not exists
                 if (ec2Instance == null)
                 {
-                   
-                    Ec2Instance ec = new Ec2Instance(record.Ec2InstanceId, ec2InstanceTypes.FindEc2InstanceType(record.Ec2InstanceType,record.RegionName));
+                    Ec2Instance ec = new Ec2Instance(record.Ec2InstanceId, ec2InstanceTypes.FindEc2InstanceType(record.Ec2InstanceType,record.RegionName,record.OSType));
                     ResourceUsageEvent resourceUsage = new ResourceUsageEvent(record.UsedFrom, record.UsedUntil);
                     ec.Usages.Add(resourceUsage);
                     ec2Instances.Add(ec);
                 }
                 else
-                {
-                    
+                {                    
                     ResourceUsageEvent resourceUsage = new ResourceUsageEvent(record.UsedFrom, record.UsedUntil);
                     ec2Instance.Usages.Add(resourceUsage);
                 }

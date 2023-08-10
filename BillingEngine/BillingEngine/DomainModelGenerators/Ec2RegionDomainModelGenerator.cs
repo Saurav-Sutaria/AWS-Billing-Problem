@@ -12,7 +12,7 @@ namespace BillingEngine.DomainModelGenerators
             List<Ec2Region> convertedEc2RegionTypes = new List<Ec2Region>();
             foreach (var data in parsedEc2RegionTypes)
             {
-                Ec2Region convertedRegion = new Ec2Region(data.RegionName);
+                Ec2Region convertedRegion = new Ec2Region(data.RegionName,data.FreeTierEligibleInstanceType);
                 convertedEc2RegionTypes.Add(convertedRegion);
             }
             return convertedEc2RegionTypes;

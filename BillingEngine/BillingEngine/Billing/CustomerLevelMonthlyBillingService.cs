@@ -7,11 +7,11 @@ namespace BillingEngine.Billing
 {
     public class CustomerLevelMonthlyBillingService
     {
-        //private readonly DiscountService _discountService;
+        private readonly DiscountService _discountService;
 
         public CustomerLevelMonthlyBillingService()
         {
-            //_discountService = new DiscountService();
+            _discountService = new DiscountService();
         }
 
         public List<MonthlyBill> GenerateMonthlyBillsForCustomer(Customer customer)
@@ -30,7 +30,7 @@ namespace BillingEngine.Billing
 
             monthlyBill.AddMonthlyEc2Usages(customer.GetMonthlyEc2InstanceUsagesForMonth(monthYear));
 
-            //_discountService.ApplyDiscounts(customer, monthlyBill);
+            _discountService.ApplyDiscounts(customer, monthlyBill);
             return monthlyBill;
         }
     }   

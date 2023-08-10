@@ -1,4 +1,6 @@
+using BillingEngine.Models.Ec2;
 using System;
+using System.Collections.Generic;
 
 namespace BillingEngine.Models.Billing
 {
@@ -14,17 +16,7 @@ namespace BillingEngine.Models.Billing
 
         public double TotalAmount { get; set; }
         public double TotalDiscount { get; set; }
-
-        public AggregatedMonthlyEc2Usage()
-        {
-            TotalAmount = 0;
-            TotalDiscount = 0;
-            TotalResources = 0;
-            TotalBilledTime = TimeSpan.Zero;
-            TotalUsedTime = TimeSpan.Zero;
-            TotalDiscountedTime = TimeSpan.Zero;
-        }
-
+        public HashSet<string> ids { get; set; }
         public double GetActualAmountToBePaid()
         {
             return TotalAmount - TotalDiscount;
