@@ -24,7 +24,8 @@ namespace BillingEngine.DomainModelGenerators
             List<ParsedCustomerRecord> parsedCustomerRecords,
             List<ParsedEc2InstanceType> parsedEc2InstanceTypes,
             List<ParsedEc2Region> parsedEc2Regions,
-            List<ParsedEc2ResourceUsageEventRecord> parsedEc2ResourceUsageEventRecords)
+            List<ParsedEc2ResourceUsageEventRecord> parsedEc2ResourceUsageEventRecords,
+            List<ParsedEc2ReservedResourceUsage> parsedReservedUsage)
         {
             //Generate Ec2Region instances by defining Ec2RegionDomainModelGenerator
             //converts ParsedEc2Region -> Ec2Region
@@ -39,6 +40,7 @@ namespace BillingEngine.DomainModelGenerators
                     GenerateCustomerModel(
                         parsedCustomerRecord,
                         parsedEc2ResourceUsageEventRecords.FindRecordsForCustomer(parsedCustomerRecord.CustomerId),
+                        parsedReservedUsage.FindReservedRecordsForCustomer(parsedCustomerRecord.CustomerId),
                         ec2InstanceTypes,
                         ec2Regions)
                 )
@@ -48,6 +50,7 @@ namespace BillingEngine.DomainModelGenerators
         private Customer GenerateCustomerModel(
             ParsedCustomerRecord parsedCustomerRecord,
             List<ParsedEc2ResourceUsageEventRecord> ec2ResourceUsageEventsForCustomer,
+            List<ParsedEc2ReservedResourceUsage> parsedEc2ReservedResourceUsages,
             List<Ec2InstanceType> ec2InstanceTypes,
             List<Ec2Region> ec2Regions)
         {
@@ -55,7 +58,7 @@ namespace BillingEngine.DomainModelGenerators
             //throw new System.NotImplementedException();
             //generate ec2Instances model for a customer
             List<Ec2Instance> ec2Instances = _ec2InstanceDomainModelGenerator.GenerateEc2InstanceModels(
-                ec2ResourceUsageEventsForCustomer, ec2InstanceTypes);
+                ec2ResourceUsageEventsForCustomer,parsedEc2ReservedResourceUsages, ec2InstanceTypes);
 
             Customer newCustomer = new Customer(
                 parsedCustomerRecord.CustomerId,

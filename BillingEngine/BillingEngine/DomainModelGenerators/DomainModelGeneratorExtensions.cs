@@ -19,17 +19,30 @@ namespace BillingEngine.DomainModelGenerators
                 .Where(record => record.CustomerId == customerId)
                 .ToList();
         }
+        //extension method to find the reserved usage records for the given customer
+        public static List<ParsedEc2ReservedResourceUsage> FindReservedRecordsForCustomer(
+            this List<ParsedEc2ReservedResourceUsage> parsedEc2ReservedResourceUsages,
+            string customerId)
+        {
+            return parsedEc2ReservedResourceUsages
+                .Where(record => record.CustomerId == customerId)
+                .ToList();
+        }
 
         //extension method to find ec2 instance from instance id
         public static Ec2Instance FindEc2Instance(this List<Ec2Instance> ec2Instances, string instanceId,string OSType)
         {
-            return ec2Instances.Where(instance => instance.InstanceId == instanceId && instance.InstanceType.OperatingSystem.ToString() == OSType).FirstOrDefault();
+            return ec2Instances.Where(instance => instance.InstanceId == instanceId && 
+                                      instance.InstanceType.OperatingSystem.ToString() == OSType).FirstOrDefault();
         }
 
         //extension method to find ec2 instance type from instance type name and region
-        public static Ec2InstanceType FindEc2InstanceType(this List<Ec2InstanceType> ec2InstanceTypes, string instanceType,string regionName,string OS)
+        public static Ec2InstanceType FindEc2InstanceType(this List<Ec2InstanceType> ec2InstanceTypes, string instanceType,string regionName,string OS,string billingType)
         {
-            return ec2InstanceTypes.Where(instance => (instance.InstanceType == instanceType && instance.Region.Name == regionName && instance.OperatingSystem.ToString() == OS)).First();
+            return ec2InstanceTypes.Where(instance => (instance.InstanceType == instanceType && 
+                                          instance.Region.Name == regionName && 
+                                          instance.OperatingSystem.ToString() == OS &&
+                                          instance.BillingType.ToString() == billingType)).First();
         }
 
         //extension method to find the monthyear object

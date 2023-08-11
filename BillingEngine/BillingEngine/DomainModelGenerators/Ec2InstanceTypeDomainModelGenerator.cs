@@ -17,7 +17,7 @@ namespace BillingEngine.DomainModelGenerators
             {
                 var ec2InstaceType = data.Ec2InstanceType;
                 var costOnDemand = double.Parse(data.CostPerHourOnDemand[1..]);
-                //var costReserved = double.Parse(data.CostPerHourReserved[1..]);
+                var costReserved = double.Parse(data.CostPerHourReserved[1..]);
                 var region = ec2Regions.FindRegion(data.RegionName);
                 bool freeTierEligible = region.isFreeTierEligible(ec2InstaceType);
 
@@ -33,16 +33,17 @@ namespace BillingEngine.DomainModelGenerators
                 newEc2InstanceType = new Ec2InstanceType(ec2InstaceType, costOnDemand, region, os, billingType,freeTierEligible);
                 convertedEc2InstanceTypes.Add(newEc2InstanceType);
 
-                ////combination 3 : windows, reserved
-                //os = OperatingSystem.Windows;
-                //billingType = BillingType.Reserved;
-                //newEc2InstanceType = new Ec2InstanceType(ec2InstaceType, costReserved, region, os, billingType,freeTierEligible);
-                //convertedEc2InstanceTypes.Add(newEc2InstanceType);
+                //combination 3 : windows, reserved
+                freeTierEligible = false;
+                os = OperatingSystem.Windows;
+                billingType = BillingType.Reserved;
+                newEc2InstanceType = new Ec2InstanceType(ec2InstaceType, costReserved, region, os, billingType, freeTierEligible);
+                convertedEc2InstanceTypes.Add(newEc2InstanceType);
 
-                ////combination 4 : linux, reserved
-                //os = OperatingSystem.Linux;
-                //newEc2InstanceType = new Ec2InstanceType(ec2InstaceType, costReserved, region, os, billingType,freeTierEligible);
-                //convertedEc2InstanceTypes.Add(newEc2InstanceType);
+                //combination 4 : linux, reserved
+                os = OperatingSystem.Linux;
+                newEc2InstanceType = new Ec2InstanceType(ec2InstaceType, costReserved, region, os, billingType, freeTierEligible);
+                convertedEc2InstanceTypes.Add(newEc2InstanceType);
             }
             return convertedEc2InstanceTypes;
         }

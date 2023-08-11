@@ -21,7 +21,7 @@ namespace BillingEngine.Printers
             double TotalDiscount = Math.Round(monthlyBill.GetTotalDiscount(aggregUsage),4);
             double AmountToPaid = Math.Round(TotalBillAmount - TotalDiscount, 4);
             if (TotalBillAmount == 0) return null;
-            string fileName = monthlyBill.CustomerId + "_" + HelperMethods.GetMonthInitial(monthlyBill.MonthYear.Month) + "-" + monthlyBill.MonthYear.Year;
+            string fileName = monthlyBill.CustomerId + "-" + HelperMethods.GetMonthInitial(monthlyBill.MonthYear.Month) + "-" + monthlyBill.MonthYear.Year;
             
             var csv = new StringBuilder();
             string csvPath = pathToOutputDir + fileName + ".csv";

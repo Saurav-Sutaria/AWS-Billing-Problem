@@ -62,11 +62,16 @@ namespace BillingEngine.Models.Billing
                 {
                     getAggreg.TotalResources += 1;
                     //Console.WriteLine("resource added for : " + CustomerId + " - " + getAggreg.ResourceType + " - " + MonthYear.Month + " - " + MonthYear.Year);
-                    getAggreg.TotalBilledTime += new TimeSpan(monthlyEc2InstanceUsage.GetTotalBillableHours(), 0, 0);
-                    getAggreg.TotalUsedTime += monthlyEc2InstanceUsage.GetTotalUsageTime();
-                    getAggreg.TotalAmount = getAggreg.TotalBilledTime.TotalHours * getAggreg.CostPerHour;
-                    getAggreg.TotalDiscountedTime +=  new TimeSpan(monthlyEc2InstanceUsage.DiscountedHours,0,0);
-                    getAggreg.TotalDiscount = getAggreg.TotalDiscountedTime.TotalHours * getAggreg.CostPerHour;
+                    var currBilledTime = new TimeSpan(monthlyEc2InstanceUsage.GetTotalBillableHours(), 0, 0);
+                    var currUsedTime = monthlyEc2InstanceUsage.GetTotalUsageTime();
+                    var currAmount = currBilledTime.TotalHours * monthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
+                    var currDiscountedTime = new TimeSpan(monthlyEc2InstanceUsage.DiscountedHours, 0, 0);
+                    var currDiscountedAmount = currDiscountedTime.TotalHours * monthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
+                    getAggreg.TotalBilledTime += currBilledTime;
+                    getAggreg.TotalUsedTime += currUsedTime;
+                    getAggreg.TotalAmount += currAmount;
+                    getAggreg.TotalDiscountedTime +=  currDiscountedTime;
+                    getAggreg.TotalDiscount += currDiscountedAmount;
                 }
             }
             return aggregatedMonthlyEc2Usages;

@@ -16,10 +16,10 @@ namespace BillingEngine
                 "E:/@internship/Test-cases-enhancment-1/input/Customer.csv",
                 "E:/@internship/Test-cases-enhancment-1/input/AWSResourceTypes.csv",
                 "E:/@internship/Test-cases-enhancment-1/input/AWSOnDemandResourceUsage.csv",
-                "E:/@internship/Test-cases-enhancment-1/input/Region.csv"
+                "E:/@internship/Test-cases-enhancment-1/input/Region.csv",
+                "E:/@internship/Test-cases-enhancment-1/input/AWSReservedInstanceUsage.csv"
             );
-            //Console.WriteLine(monthlyBills.Count);
-            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/Test-cases-enhancment-1/result_FreeTier/"));
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "E:/@internship/Test-cases-enhancment-1/result/"));
         }
     }
 }
